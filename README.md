@@ -10,6 +10,8 @@
 
 This project automates monitoring an RSS feed and sends updates directly to a Telegram channel using **n8n**. It is useful for tracking blog posts, tech news, or content updates without manual checking.
 
+![Workflow Demo](workflow-demo.png)
+
 ### Tech Stack
 
 | Technology | Purpose |
