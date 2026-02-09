@@ -138,7 +138,7 @@ rss-telegram-bot/
 
 ## 👨‍💻 Author
 
-**Andri Rasbin**  
+**Andri Puji Prasetiyo**  
 Automation & AI Engineering Learner  
 *Target: Build Production-Ready AI Portfolio*
 
