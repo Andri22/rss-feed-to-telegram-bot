@@ -1,0 +1,170 @@
+{
+  "name": "RSS Feed to Telegram Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "feedUrl": "https://news.google.com/rss"
+      },
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5516b8be-d9d9-4500-844b-7cdd942d6b79",
+      "name": "RSS Feed Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3ccbda0f-415e-4ab2-8b5c-1549a784f98a",
+              "name": "Title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "f8df9889-2edf-441a-925f-5e1ca5fff45a",
+              "name": "Link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2ee57966-fe45-4e2a-8bc4-0c004d314968",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "chatId": "-1003764865065",
+        "text": "=📢 New Article\n\nTitle:{{ $json.Title }}\nLink:{{ $json.Link }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        704,
+        -16
+      ],
+      "id": "d3b1b68c-c113-41f1-8713-5c7761cfe381",
+      "name": "Send a text message",
+      "webhookId": "16cff478-d8d8-48a3-9193-97fa75a1df5c",
+      "credentials": {
+        "telegramApi": {
+          "id": "U0dhh7DiclrgLWZb",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4b34f96b-e045-470f-99ae-e4c25b401beb",
+              "leftValue": "={{$json.Title.toLowerCase().includes(\"ai\")}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "10f9f72b-647d-4def-84fd-e3223f06bf29",
+      "name": "If"
+    }
+  ],
+  "pinData": {
+    "Edit Fields": [
+      {
+        "json": {
+          "Title": "Woman faints after being caned 140 times under Indonesian province’s sharia law - The Guardian",
+          "Link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOV041ZlI4VG9TZG1kQkdmSFZzcUkwMnJoU2JfOW9CaTBBTkJVQ2pLd0hSV1ZZMWFudjV3Q19wdG9WRzNESElya3c2bDJmYU1ieHNsdHBuaVJxR2tuWnYxNjIxSDhXZjJfSHdKVnI2QWdIZm9GSGhWYmJ3dHBnRXVmcDU5aVN2ZUhIT0dEZk4zS2Vob0xlRVFxb3h6OA?oc=5"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "RSS Feed Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "9734cb70-fe3b-4288-90da-4e1844a1cd35",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ea818ed27e80d1f96ce51e76dd5b8d9538de3144aa5c0a44aacc90d1d31c2dd6"
+  },
+  "id": "idGVyQYOY1xedXa3_6j-S",
+  "tags": []
+}
